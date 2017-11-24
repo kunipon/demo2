@@ -40,6 +40,12 @@ echo-bar:
         name: "echo bar"
         code: |
           echo bar
+echo-pwd:
+  steps:
+    - script:
+        name: "pwd"
+        code: |
+          pwd
 #deploy-production:
 #  box: cgswong/aws:latest
 #  steps:
