@@ -1,4 +1,4 @@
-box: java
+box: openjdk:8-jdk-alpine
 build:
   steps:
     - script:
@@ -46,6 +46,19 @@ echo-pwd:
         name: "pwd"
         code: |
           pwd
+generate-label:
+  steps:
+    - script:
+        name: "generate version label"
+        code: |
+          RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null)
+          if [[ -z $RELEASE_TAG ]]; then
+            export VERSION_LABEL=$WERCKER_GIT_COMMIT
+          else
+            export VERSION_LABEL=${RELEASE_TAG}-${WERCKER_GIT_COMMIT:0:7}
+          fi
+          echo $VERSION_LABEL
+
 #deploy-production:
 #  box: cgswong/aws:latest
 #  steps:
