@@ -1,4 +1,4 @@
-box: openjdk:8-jdk-alpine
+box: java
 build:
   steps:
     - script:
@@ -46,18 +46,23 @@ echo-pwd:
         name: "pwd"
         code: |
           pwd
+echo-cache-dir:
+  steps:
+    - script:
+        name: "echo WERCKER_CACHE_DIR"
+        code: |
+          echo $WERCKER_CACHE_DIR
 generate-label:
   steps:
     - script:
         name: "generate version label"
         code: |
-          RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null)
-          if [[ -z $RELEASE_TAG ]]; then
-            VERSION_LABEL=$WERCKER_GIT_COMMIT
-          else
+          VERSION_LABEL=$WERCKER_GIT_COMMIT
+          RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null || echo '')
+          if [[ ! -z $RELEASE_TAG ]]; then
             VERSION_LABEL=${RELEASE_TAG}-${WERCKER_GIT_COMMIT:0:7}
           fi
-          export $VERSION_LABEL
+          export VERSION_LABEL=$VERSION_LABEL
           echo $VERSION_LABEL
 
 #deploy-production:
