@@ -58,7 +58,7 @@ generate-label:
         name: "generate version label after tag"
         code: |
           VERSION_LABEL=$WERCKER_GIT_COMMIT
-          RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null || echo '')
+          RELEASE_TAG=$(git describe --tags 2>/dev/null || echo '')
           if [[ ! -z $RELEASE_TAG ]]; then
             VERSION_LABEL=${RELEASE_TAG}-${WERCKER_GIT_COMMIT:0:7}
           fi
