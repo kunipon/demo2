@@ -55,7 +55,7 @@ echo-cache-dir:
 generate-label:
   steps:
     - script:
-        name: "generate version label"
+        name: "generate version label after tag"
         code: |
           VERSION_LABEL=$WERCKER_GIT_COMMIT
           RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null || echo '')
