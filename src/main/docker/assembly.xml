@@ -19,5 +19,12 @@
             </includes>
             <outputDirectory>.</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>.foo</directory>
+            <outputDirectory>/.ebextensions</outputDirectory>
+            <includes>
+                <include>nginx.config</include>
+            </includes>
+        </fileSet>
     </fileSets>
 </assembly>
