@@ -24,7 +24,7 @@ deploy-demo:
           echo $VERSION_LABEL
           echo pwd
           mv $WERCKER_SOURCE_DIR/target/$S3_KEY $WERCKER_SOURCE_DIR/
-  steps:
+  after-steps:
     - koding/eb-deploy@0.31.0:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
