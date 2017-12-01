@@ -9,86 +9,28 @@ build:
     - script:
         name: release perform
         code: |
-          ./mvnw clean package
-slack-notify:
-  steps: 
+          $WERCKER_SOURCE_DIR/mvnw clean package
+  after-steps: 
     - kunipon/slack-notifier@1.3.0:
         url: $SLACK_URL
         channel: $SLACK_CHANNEL
         username: wercker
-list-target-dir:
+deploy-demo:
   steps:
     - script:
-        name: "list target directory"
-        code: |
-          ls -lsa ./target
-list-zip-contents:
-  steps:
-    - script:
-        name: "list zip contents"
-        code: |
-          unzip -l ./target/demo.zip
-echo-foo:
-  steps:
-    - script:
-        name: "echo foo"
-        code: |
-          echo foo
-echo-bar:
-  steps:
-    - script:
-        name: "echo bar"
-        code: |
-          echo bar
-echo-pwd:
-  steps:
-    - script:
-        name: "pwd"
-        code: |
-          pwd
-echo-cache-dir:
-  steps:
-    - script:
-        name: "echo WERCKER_CACHE_DIR"
-        code: |
-          echo $WERCKER_CACHE_DIR
-generate-label:
-  steps:
-    - script:
-        name: "generate version label after tag"
+        name: "generate version label from light-tag"
         code: |
           export VERSION_LABEL=$(git describe --tags 2>/dev/null || echo $WERCKER_GIT_COMMIT)
           echo $VERSION_LABEL
-
-#deploy-production:
-#  box: cgswong/aws:latest
-#  steps:
-#    - script:
-#        name: "export release tag"
-#        code: |
-#          export RELEASE_TAG=$(git describe --tags --exact-match $WERCKER_GIT_COMMIT 2>/dev/null || echo $WERCKER_GIT_COMMIT)
-#          echo $RELEASE_TAG
-#    - script:
-#        name: "set aws config"
-#        code: |
-#          aws configure set aws_access_key_id $AWS_KEY
-#          aws configure set aws_secret_access_key $AWS_SECRET
-#          aws configure set default.region $AWS_REGION
-#          aws configure set default.output json
-#    - script:
-#        name: "zip cp to S3"
-#        code: |
-#          aws s3 cp ./target/demo.zip s3://${S3_BUCKET}/demo-${RELEASE_TAG}.zip
-#    - script:
-#        name: "create eb-app version"
-#        code: |
-#          aws elasticbeanstalk create-application-version \
-#              --application-name FirstApplication \
-#              --version-label ${RELEASE_TAG} \
-#              --source-bundle S3Bucket=${S3_BUCKET},S3Key=demo-${RELEASE_TAG}.zip
-#    - script:
-#        name: "eb-app update"
-#        code: |
-#          aws elasticbeanstalk update-environment \
-#              --environment-name Custom-env \
-#              --version-label ${RELEASE_TAG}
+          echo pwd
+          mv $WERCKER_SOURCE_DIR/target/$S3_KEY $WERCKER_SOURCE_DIR/
+  steps:
+    - koding/eb-deploy@0.31.0:
+        access-key: $S3_KEY_ID
+        secret-key: $S3_KEY_SECRET
+        app-name: demo
+        env-name: $EB_ENV_NAME
+        version-label: $VERSION_LABEL
+        region: ap-northeast-1
+        s3-bucket: $S3_BUCKET
+        s3-key: $S3_KEY
