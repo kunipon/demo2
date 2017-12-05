@@ -10,8 +10,8 @@ build:
         name: release perform
         code: |
           $WERCKER_SOURCE_DIR/mvnw clean package
-  after-steps: 
-     - slack-notifier:
+  steps: 
+    - slack-notifier:
 #    - kunipon/slack-notifier@1.3.2:
         url: $SLACK_URL
         channel: $SLACK_CHANNEL
