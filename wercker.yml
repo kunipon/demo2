@@ -39,5 +39,6 @@ touch-file:
     - script:
         name: "touch file test"
         code: |
-          touch ./test.txt
+          RESULT=$(curl -s "https://steps.wercker.com/api/steps/kunipon/slack-notifier/1.3.3" --output ./result.txt -w "%{http_code}")
           ls -lsa
+          echo $RESULT
