@@ -10,7 +10,7 @@ build:
         name: release perform
         code: |
           $WERCKER_SOURCE_DIR/mvnw clean package
-          cp $WERCKER_SOURCE_DIR/fuervo/fuervo-web-admin/target/fuervo-web-admin-0.0.3-SNAPSHOT.jar $WERCKER_OUTPUT_DIR/
+          cp $WERCKER_SOURCE_DIR/target/demo.zip $WERCKER_OUTPUT_DIR/
   after-steps: 
     - kunipon/slack-notifier@1.3.3:
         url: $SLACK_URL
