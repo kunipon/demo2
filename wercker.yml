@@ -34,3 +34,10 @@ deploy-demo:
         region: ap-northeast-1
         s3-bucket: $S3_BUCKET
         s3-key: $S3_KEY
+touch-file:
+  steps:
+    - script:
+        name: "touch file test"
+        code: |
+          touch ./test.txt
+          ls -lsa
