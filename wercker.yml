@@ -17,13 +17,14 @@ build:
         channel: $SLACK_CHANNEL
         username: wercker
 deploy-demo:
+  box: cgswong/aws:latest
   steps:
     - script:
         name: "generate version label from light-tag"
         code: |
           export VERSION_LABEL=$(git describe --tags 2>/dev/null || echo $WERCKER_GIT_COMMIT)
           echo $VERSION_LABEL
-    - koding/eb-deploy@0.31.0:
+    - kunipon/eb-deploy@1.0.0:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
         app-name: demo
