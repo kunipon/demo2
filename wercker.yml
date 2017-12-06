@@ -39,3 +39,9 @@ deploy-demo:
         s3-bucket-path: demo
         s3-cp-src: $S3_KEY
         s3-cp-dst: $VERSION_LABEL-$S3_KEY
+lambda-test:
+  steps:
+    - script:
+        name: "for lambda test."
+        code: |
+          echo test
