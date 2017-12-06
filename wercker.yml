@@ -23,7 +23,7 @@ deploy-demo:
         code: |
           export VERSION_LABEL=$(git describe --tags 2>/dev/null || echo $WERCKER_GIT_COMMIT)
           cp $WERCKER_SOURCE_DIR/target/demo.zip $WERCKER_SOURCE_DIR/
-    - kunipon/eb-deploy@1.0.0:
+    - kunipon/eb-deploy@1.0.1:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
         app-name: demo
@@ -31,4 +31,6 @@ deploy-demo:
         version-label: $VERSION_LABEL
         region: ap-northeast-1
         s3-bucket: $S3_BUCKET
-        s3-key: $S3_KEY
+        s3-bucket-path: /demo
+        s3-cp-src: $S3_KEY
+        s3-cp-dst: $VERSION_LABEL-$S3_KEY
