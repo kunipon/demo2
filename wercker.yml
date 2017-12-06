@@ -11,7 +11,7 @@ build:
         code: |
           $WERCKER_SOURCE_DIR/mvnw clean package
           cp $WERCKER_SOURCE_DIR/target/demo.zip $WERCKER_OUTPUT_DIR/
-#  after-steps: 
+  after-steps: 
     - kunipon/slack-notifier@1.3.3:
         url: $SLACK_URL
         channel: $SLACK_CHANNEL
