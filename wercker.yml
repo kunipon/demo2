@@ -24,6 +24,9 @@ deploy-demo:
         code: |
           export VERSION_LABEL=$(git describe --tags 2>/dev/null || echo $WERCKER_GIT_COMMIT)
           echo $VERSION_LABEL
+          echo $WERCKER_OUTPUT_DIR
+          pwd
+          ls -lsa
     - kunipon/eb-deploy@1.0.0:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
