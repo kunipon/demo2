@@ -16,7 +16,6 @@ build:
         url: $SLACK_URL
         channel: $SLACK_CHANNEL
         username: wercker
-    - internal/store-container
 deploy-demo:
   steps:
     - script:
