@@ -33,9 +33,15 @@ deploy-demo:
         s3-bucket-path: demo
         s3-cp-src: $WERCKER_OUTPUT_DIR/$S3_KEY
         s3-cp-dst: $VERSION_LABEL-$S3_KEY
-lambda-test:
+souce-ls:
   steps:
     - script:
-        name: "for lambda test."
+        name: "source ls"
         code: |
-          echo test
+          ls -lsa $WERCKER_SOURCE_DIR
+output-ls:
+  steps:
+    - script:
+        name: "output ls"
+        code: |
+          ls -lsa $WERCKER_OUTPUT_DIR
