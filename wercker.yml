@@ -23,16 +23,14 @@ build:
 deploy-demo:
   box: cgswong/aws:latest
   steps:
-    - fuervo/eb-deploy@1.0.2:
+    - fuervo/eb-deploy@1.0.3:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
         app-name: demo
         env-name: $EB_ENV_NAME
-        version-label: $VERSION_LABEL
         s3-bucket: $S3_BUCKET
         s3-bucket-path: demo
-        s3-cp-src: $WERCKER_SOURCE_DIR/$S3_KEY
-        s3-cp-dst: $VERSION_LABEL-$S3_KEY
+        s3-key: $WERCKER_SOURCE_DIR/$S3_KEY
 souce-ls:
   steps:
     - script:
