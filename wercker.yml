@@ -30,7 +30,7 @@ deploy-demo:
         env-name: $EB_ENV_NAME
         s3-bucket: $S3_BUCKET
         s3-bucket-path: demo
-        s3-key: $WERCKER_SOURCE_DIR/$S3_KEY
+        s3-key: $S3_KEY
 souce-ls:
   steps:
     - script:
