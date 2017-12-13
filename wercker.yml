@@ -23,7 +23,7 @@ build:
 deploy-demo:
   box: cgswong/aws:latest
   steps:
-    - fuervo/eb-deploy@1.0.3:
+    - fuervo/eb-deploy@1.0.4:
         access-key: $S3_KEY_ID
         secret-key: $S3_KEY_SECRET
         app-name: demo
